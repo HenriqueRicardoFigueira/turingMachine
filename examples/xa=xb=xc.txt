@@ -1,0 +1,34 @@
+X a b c
+B X a b c
+B
+0 1 2 3 4 5 6 7
+0
+7
+1
+0 0 X X R
+0 0 c c R
+0 0 b b R
+0 1 a X L
+0 6 B B L
+1 1 b b L
+1 1 X X L
+1 1 c c L
+1 2 B B R
+2 2 c c R
+2 2 a a R
+2 2 X X R
+2 3 b X L
+3 3 a a L
+3 3 c c L
+3 3 X X L
+3 4 B B R
+4 4 X X R
+4 4 a a R
+4 4 b b R
+4 5 c X L
+5 0 B B R
+5 5 a a L
+5 5 b b L
+5 5 X X L
+6 6 X X L
+6 7 B B R

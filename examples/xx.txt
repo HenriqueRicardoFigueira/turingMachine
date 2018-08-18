@@ -1,0 +1,42 @@
+A a b
+A B a b
+B
+1 10 2 3 4 5 6 7 8 9
+1
+6
+1
+1 2 a A R
+1 2 b B R
+1 5 A A L
+1 5 B B L
+1 6 B B S
+10 10 a a L
+10 10 b b L
+10 10 B B L
+10 7 A A R
+10 7 B B R
+2 2 b b R
+2 2 a a R
+2 3 B B L
+2 3 A A L
+2 3 B B L
+3 4 a A L
+3 4 b B L
+4 1 A A R
+4 1 B B R
+4 4 a a L
+4 4 b b L
+5 5 B b L
+5 5 A a L
+5 7 B B R
+7 6 B B S
+7 8 a A R
+7 9 b B R
+8 10 A B L
+8 8 a a R
+8 8 b b R
+8 8 B B R
+9 10 B B L
+9 9 b b R
+9 9 B B R
+9 9 a a R

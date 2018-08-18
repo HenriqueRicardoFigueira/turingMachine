@@ -1,0 +1,20 @@
+X a b c
+B X a b c
+B
+0 1 2 3 6
+0
+6
+1
+0 0 X X R
+0 1 a X R
+0 6 B B R
+1 1 a a R
+1 1 X X R
+1 2 b X R
+2 2 X X R
+2 2 b b R
+2 3 c X L
+3 0 B B R
+3 3 X X L
+3 3 a a L
+3 3 b b L

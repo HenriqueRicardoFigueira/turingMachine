@@ -1,0 +1,48 @@
+A X a b
+A B X a b
+B
+0 1 10 11 12 13 2 3 4 5 6 7 8 9
+0
+11
+1
+0 1 a A R
+0 1 b B R
+0 4 A X L
+0 6 B X L
+1 1 b b R
+1 1 a a R
+1 2 B B L
+1 2 B B L
+1 2 A A L
+10 10 A A R
+10 10 B B R
+10 8 X X R
+12 12 X X L
+12 4 A A L
+12 4 B B L
+13 13 X X L
+13 6 B B L
+13 6 A A L
+2 3 b B L
+2 3 a A L
+3 0 B B R
+3 0 A A R
+3 3 b b L
+3 3 a a L
+4 4 B B L
+4 4 A A L
+4 5 B B R
+4 5 X X R
+5 7 A X R
+6 6 B B L
+6 6 A A L
+6 9 X X R
+6 9 B B R
+7 7 B B R
+7 7 A A R
+7 8 X X R
+8 11 B B R
+8 12 A X L
+8 13 B X L
+8 8 X X R
+9 10 B X R
