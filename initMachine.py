@@ -4,23 +4,10 @@ import sys
 import copy
 from fita import Fita
 
-
-fita = []
-element = []
-inputAlpha = []
-tapeAlpha = []
-branco = ""
-states = []
-initialState = ""
-finalStates = []
-contentTape = []
-transitions = {}
-transitionsArq = []
-currentState = ""
-
 name = sys.argv[1]
 
 #LEITURA_ARQUIVO/ CRIAÇÃO DE LISTAS
+contentTape = []
 for x in range(2,(len(sys.argv))):
     aux = sys.argv[x]
     contentTape.append(aux)
@@ -44,7 +31,9 @@ qtTape = int(elements[6])
 transitionsaux = {}
 transitions = {}
 
+
 #TRASIÇÕES
+transitionsArq = []
 for k in elements[7:]:
     transitionsArq.append(k)
 
