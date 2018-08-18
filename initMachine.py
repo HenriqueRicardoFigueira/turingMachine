@@ -9,8 +9,7 @@ fita = []
 element = []
 inputAlpha = []
 tapeAlpha = []
-blank = ""
-argsFitas = []
+branco = ""
 states = []
 initialState = ""
 finalStates = []
@@ -99,13 +98,14 @@ def getCurrentState():
     return currentState
 
 def transition(iniState,fita):
-    runing = True
     global finalStates
     global branco
     global transitions
     stateTransitions = transitions[iniState]
     currentHead = fita.ler_fita()
     print getCurrentState()
+    print currentHead
+    print stateTransitions
     if currentHead in stateTransitions:
         transi = stateTransitions[currentHead]
         if len(transi) == 0:
