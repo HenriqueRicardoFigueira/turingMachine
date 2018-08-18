@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 import sys
 import copy
-import fita
+from fita import Fita
 
-tape = []
+
+fita = []
 element = []
 inputAlpha = []
 tapeAlpha = []
@@ -28,30 +29,20 @@ for x in range(2,(len(sys.argv))):
 arq = open(name,'r')
 
 elements = arq.read().splitlines()
-
 #ALFABETO_ENTRADA
 inputAlpha = elements[0].split(" ")
-
 #ALFABETO_FITA
 tapeAlpha = elements[1].split(" ")
-
 #BRANCO
 branco = elements[2]
-
 #ESTADOS
 states = elements[3].split(" ")
-
 #INICIAL
 initialState = elements[4].strip()
-
 #FINAL
 finalStates = elements[5].split(" ")
-
-
 qtTape = int(elements[6])
-
 transitionsaux = {}
-
 transitions = {}
 
 #TRASIÇÕES
@@ -84,6 +75,55 @@ for s in states:
 
     transitions[s] = auxsimbol
 
+def changeCurrentState(newcurrent):
+    global currentState
+    currentState = newcurrent
+
+def currentState():
+    global currentState
+    return str(currentState)
+
+def isFinal(state):
+    if state in finalStates:
+        return True
+    else:
+        return False
+
+def isInitial(state):
+    if str(state) == initialState:
+        return  True
+    else:
+        return False
+
+def getCurrentState():
+    return currentState
+
+def transition(iniState,fita):
+    runing = True
+    global finalStates
+    global branco
+    global transitions
+    stateTransitions = transitions[iniState]
+    currentHead = fita.ler_fita()
+    print getCurrentState()
+    if currentHead in stateTransitions:
+        transi = stateTransitions[currentHead]
+        if len(transi) == 0:
+            return 1
+        elif len(transi) == 1:
+            aux = transi[0]
+            fita.escrever_fita(aux[1])
+            fita.move_cabeca(aux[2])
+            changeCurrentState(aux[0])
+            return aux   
+        elif len(transi) > 1:
+            return transi
+        else:
+            return None
+    else:
+        return None
+
+
 
 def main():
     global states
@@ -93,11 +133,11 @@ def main():
     global contentTape
     global transitions
     changeCurrentState(initialState)
-    tape = Tape(contentTape, inputAlpha, tapeAlpha, branco)
-    ntxState =  transition(initialState,tape)
+    fita = Fita(contentTape, inputAlpha, tapeAlpha, branco)
+    ntxState =  transition(initialState,fita)
     x = True
     while(x == True):
-        ntxState = transition(ntxState[0],tape)
+        ntxState = transition(ntxState[0],fita)
         if getCurrentState() in finalStates:
                 print "aceito"
                 x = False
