@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 class Fita:
     def __init__(self, palavra, alfaEntrada, alfaFita, branco):
         self.alfabeto = ''.join(alfaEntrada) #atribui o alfabeto de entrada
@@ -8,14 +11,14 @@ class Fita:
         self.incializa_fita(''.join(palavra))#atribui a palavra de entrada
         self.posicao_cabeca = 1
 
-    def incializa_fita(self, palavras):
-        fita = self.branco
+    def incializa_fita(self, palavras): #inicializa o conteúdo da fita
+        self._fita = self.branco
         for char in (c for c in palavras if c in self.alfabeto):
-            fita += char
-        fita += self.branco
-        self._fita = list(fita)
+            self._fita += char
+        self._fita += self.branco
+        self._fita = list(self._fita)
 
-    def escrever_fita(self, char):
+    def escrever_fita(self, char):#escreve na fita
         ultima_pos_fita = len(self._fita) - 1
 
         if char not in self.alfabeto:
@@ -33,15 +36,15 @@ class Fita:
             if self.posicao_cabeca == ultima_pos_fita:
                 self._fita += self.branco
 
-        if self.posicao_cabeca == ultima_pos_fita:
-                self._fita += self.branco
+       # if self.posicao_cabeca == ultima_pos_fita:
+        #        self._fita += self.branco
 
     def ler_fita(self):#retorna elemento da fita na posicao que a cabeca aponta 
         if((self.posicao_cabeca < 0) or (self.posicao_cabeca > len(self._fita) - 1)):#valida
             return 
         return self._fita[self.posicao_cabeca]
 
-    def retorna_fita(self):
+    def retorna_fita(self):#retorna a fita
         self.remove_brancos() 
         return ''.join(self._fita)
 
