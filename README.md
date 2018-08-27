@@ -27,4 +27,5 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
 Se você ja está perdido a ponto de ter chegado até aqui, vá em frente e se afunde de uma vez! :trollface:
 ## Autor
 [Gabriel Negrão Silva](https://github.com/itsgnegrao). :alien:
+
 [Henrique Ricardo Figueira](https://github.com/HenriqueRicardoFigueira). :alien:
