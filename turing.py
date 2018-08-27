@@ -37,9 +37,9 @@ def main():
 
         #verifica o ofim da máquina ou não
         if maquina.getCurrentState() in maquina.finalStates:
-                print "\nResultado: Palavra Aceita"
-                x = False
-                return 0
+            print "\nResultado: Palavra Aceita"
+            x = False
+            return 0
         if ntxState == None:
             print "\nResultado: Palavra Rejeitada"
             return 1
