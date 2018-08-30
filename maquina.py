@@ -82,24 +82,6 @@ class Maquina:
 		return str(self.currentState)
 
 	def retorna_transicoesPossiveis(self, iniState):
-		return self.transitions[iniState]
-
-	def transition(self,iniState,fita):
-		stateTransitions = self.transitions[iniState]
-		currentHead = fita.ler_fita()
-		if currentHead in stateTransitions:
-			transi = stateTransitions[currentHead]
-			if len(transi) == 0:
-				return 1
-			elif len(transi) == 1:
-				aux = transi[0]
-				fita.escrever_fita(aux[1])
-				fita.move_cabeca(aux[2])
-				self.changeCurrentState(aux[0])
-				return aux   
-			elif len(transi) > 1:
-				return transi
-			else:
-				return None
-		else:
+		if(iniState not in self.transitions):
 			return None
+		return self.transitions[iniState]

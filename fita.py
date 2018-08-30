@@ -3,7 +3,7 @@
 
 class Fita:
     def __init__(self, palavra, alfaEntrada, alfaFita, branco):
-        self.alfabeto = ''.join(alfaEntrada) #atribui o alfabeto de entrada
+        self.alfabeto = ''.join(alfaFita) #atribui o alfabeto de entrada
         self.alfabeto = self.alfabeto + branco
         self.branco = branco #atribui o simbolo branco
         self.alfabetoFita = alfaFita #atribui o alfabeto completo da fita (X, B, 0, 1, etc)
@@ -21,7 +21,7 @@ class Fita:
     def escrever_fita(self, char):#escreve na fita
         ultima_pos_fita = len(self._fita) - 1
 
-        if char not in self.alfabeto:
+        if char not in self.alfabetoFita:
             return
 
         if self.posicao_cabeca < 1: #estende a esquerda
