@@ -16,20 +16,23 @@ def main():
     fita = Fita( maquina.contentTape, maquina.inputAlpha, maquina.tapeAlpha, maquina.branco)
 
     #aqui só para debbug
-    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('cls' if os.name == 'nt' else 'clear')
+    print "\n"
     print "Estado Atual Fita: "+fita.retorna_fita()
-    print "Possíveis Estados: "+str(maquina.retorna_estadosPossiveis(maquina.initialState))
+    print "Possíveis Estados: "+str(maquina.retorna_transicoesPossiveis(maquina.initialState))
     if modo.capitalize() == "M".capitalize(): tst = raw_input("Aperte Enter Para Prosseguir.")
 
-    #pega os estados possiveis
+    #pega as transicoes possiveis
     ntxState =  maquina.transition(maquina.initialState,fita)
     
     x = True
     while(x == True):
         #aqui só para debbug
-        os.system('cls' if os.name == 'nt' else 'clear')
+       # os.system('cls' if os.name == 'nt' else 'clear')
+        print "\n"
         print "Estado Atual Fita: "+fita.retorna_fita()
-        print "Possíveis Estados: "+str(maquina.retorna_estadosPossiveis(ntxState[0]))
+        print "Posicao da Cabeca: "+fita.ler_fita()
+        print "Possíveis Transicoes: "+str(maquina.retorna_transicoesPossiveis(ntxState[0]))
         if modo.capitalize() == "M".capitalize(): tst = raw_input("Aperte Enter Para Prosseguir.")
 
         #pega os estados possiveis

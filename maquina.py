@@ -81,7 +81,7 @@ class Maquina:
 	def getCurrentState(self):
 		return str(self.currentState)
 
-	def retorna_estadosPossiveis(self, iniState):
+	def retorna_transicoesPossiveis(self, iniState):
 		return self.transitions[iniState]
 
 	def transition(self,iniState,fita):
