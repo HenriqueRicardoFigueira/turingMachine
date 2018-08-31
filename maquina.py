@@ -85,3 +85,14 @@ class Maquina:
 		if(iniState not in self.transitions):
 			return None
 		return self.transitions[iniState]
+
+	def print_fitas(self,fitas):
+		print("Quantidade de Fitas:" + str(len(fitas)))
+		for fita in fitas:
+			print("  Fita               :"+str(fitas.index(fita)))
+			sys.stdout.write("  Posição da Cabeça  : ")
+			for i in range(0,fita.posicao_cabeca): sys.stdout.write(' ')
+			print('|')
+			print("  Conteudo Atual Fita: "+fita.retorna_fita())
+			print("  Estado Atual       : "+str(fita.retorna_estado()))
+			print("  Estados Possíves   : "+str(self.retorna_transicoesPossiveis(fita.retorna_estado())))

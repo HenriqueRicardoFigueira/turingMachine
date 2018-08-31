@@ -10,6 +10,7 @@ class Fita:
         
         self.incializa_fita(''.join(palavra))#atribui a palavra de entrada
         self.posicao_cabeca = 1
+        self.estado = None
 
     def incializa_fita(self, palavras): #inicializa o conteúdo da fita
         self._fita = self.branco
@@ -17,6 +18,12 @@ class Fita:
             self._fita += char
         self._fita += self.branco
         self._fita = list(self._fita)
+
+    def retorna_estado(self):
+        return str(self.estado)
+        
+    def mudar_estado(self, novoEstado):
+        self.estado = novoEstado
 
     def escrever_fita(self, char):#escreve na fita
         ultima_pos_fita = len(self._fita) - 1

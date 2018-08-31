@@ -1,27 +1,39 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys, os, copy
+import sys, copy, random
 from fita import Fita
 from maquina import Maquina
 
 class Turing:
 
-    fitas = []
+    fitas = [] #passar as fita e a remoção das fitas pra maquina manipular
 
-    def transition(self,iniState,fita, maquina):
+    def transition(self,iniState,fita, maquina): #colocar essa função dentro da maquina também
         stateTransitions = maquina.transitions[iniState]
         currentHead = fita.ler_fita()
         if currentHead in stateTransitions:
             transi = stateTransitions[currentHead]
             if len(transi) == 0:
-                return 1
+                if(len(self.fitas)>1):
+                    print("Não há Estados Possíveis Para fita "+str(self.fitas.index(fita))+'.')
+                    maquina.print_fitas(self.fitas)
+                    print("\n")
+
+                    return None
+
+                else:
+                    print("Palavra Rejeitada")
+                    exit(1)
+
             elif len(transi) == 1:
                 aux = transi[0]
                 fita.escrever_fita(aux[1])
                 fita.move_cabeca(aux[2])
-                maquina.changeCurrentState(aux[0])
-                return aux   
+                fita.mudar_estado(aux[0])
+
+                return None 
+
             elif len(transi) > 1:
                 newFitas = []
 
@@ -29,82 +41,79 @@ class Turing:
                     fita2 = copy.deepcopy(fita)
                     fita2.escrever_fita(i[1])
                     fita2.move_cabeca(i[2])
+                    fita2.mudar_estado(i[0])
                     newFitas.append(fita2)
                     #cria a copia de uam fita, movimenta para as possiveis transações e anexa a fita a uma nova lista removendo a si mesma da lista anterior
                     # a lista anterior recebe as novas fitas menos a original
 
-                self.fitas.remove(fita)              
+                self.fitas.remove(fita)   
 
                 for i in newFitas:
                     self.fitas.append(i)
-
-                return transi[len(transi)-1]
+  
+                #return transi[len(transi)-1]
+                return None
 
             else:
                 return None
         else:
             if(len(self.fitas)>1):
-                print("Não há Estados Possíveis Para fita"+str(self.fitas.index(fita)))
+                print("Não há Estados Possíveis Para fita "+str(self.fitas.index(fita))+'.')
+                maquina.print_fitas(self.fitas)
+                print("\n")
                 self.fitas.remove(fita)
-                #return self.fitas[1]
+                return None
 
             else:
-                print("Palavra Rejeitada")
-                exit(1)
+                 print("Palavra Rejeitada")
+                 exit(1)
+            #return None
 
     def __main__(self):
         #aqui só para debbug
-        os.system('cls' if os.name == 'nt' else 'clear')
         modo = raw_input("Selecione o modo que deseja executar a Máquina e Aperte Enter.\nA - Automático\nM - Manual (Passo a Passo)\n")
 
         #inicializa a Maquina e a Fita
         maquina = Maquina(sys.argv)
         maquina.changeCurrentState(maquina.initialState)
-        fita = Fita(maquina.contentTape, maquina.inputAlpha, maquina.tapeAlpha, maquina.branco)
-        self.fitas.append(fita)
+
+        #INICIALIZAR DENTRO DA MAQUINA MESMO E MANIPULAR POR LA ATRAVEZ DE UMA FUNÇÃO
+        fita = Fita(maquina.contentTape, maquina.inputAlpha, maquina.tapeAlpha, maquina.branco) #<- ESSA INICIALIZAR DENTRO DA MAQUINA MESMO E MANIPULAR POR LA
+        fita.mudar_estado(maquina.initialState)#<- ESSA INICIALIZAR DENTRO DA MAQUINA MESMO E MANIPULAR POR LA
+        self.fitas.append(fita)#<- ESSA INICIALIZAR DENTRO DA MAQUINA MESMO E MANIPULAR POR LA
+        
 
         #aqui só para debbug
-        #os.system('cls' if os.name == 'nt' else 'clear')
-        for fit in self.fitas:
-            print "\n"
-            print "Estado Atual Fita: "+str(self.fitas.index(fit))+": "+fit.retorna_fita()
-            #print "Possíveis Estados: "+str(maquina.retorna_transicoesPossiveis(maquina.initialState))
-        #if modo.capitalize() == "M".capitalize(): tst = raw_input("Aperte Enter Para Prosseguir.")
+        maquina.print_fitas(self.fitas) #<-aqui não precisará passar as fitas pois elas ja estarão dentro da maquina
+        if modo.capitalize() == "M".capitalize(): tst = raw_input("\nAperte Enter Para Prosseguir.")
+        print("\n")
 
-        #pega as transicoes possiveis
-        ntxState =  self.transition(maquina.initialState,self.fitas[len(self.fitas)-1],maquina)
+        #pega as transicoes possiveis iniciais
+        self.transition(maquina.initialState,self.fitas[len(self.fitas)-1],maquina)
         
         x = True
         while(x == True):
-            print("len:" + str(len(ntxState)))
-            for fit in self.fitas:
-                print "Conteudo Atual Fita: "+str(self.fitas.index(fit))+": "+fit.retorna_fita()
-                print(maquina.getCurrentState())
-                print "\n"
-                #print "Possíveis Estados: "+str(maquina.retorna_transicoesPossiveis(maquina.initialState))
-                #print "Possíveis Transicoes: "+str(maquina.retorna_transicoesPossiveis(ntxState[0]))
-            #if modo.capitalize() == "M".capitalize(): tst = raw_input("Aperte Enter Para Prosseguir.")
-
-
-            newNtxState = []
+            #aqui de debbug tb
+            maquina.print_fitas(self.fitas)
+            if modo.capitalize() == "M".capitalize(): tst = raw_input("\nAperte Enter Para Prosseguir.")
+            print("\n")
             
+            aux = []
+            #correr as fitas ver se o estado das fitas algum deles é o final
             for fit in self.fitas:
-                newNtxState.append(self.transition(ntxState[0][0],fit, maquina))
-            
-            ntxState = newNtxState
-            #verifica o ofim da máquina ou não
+                #verifica o ofim da máquina ou não
+                if fit.retorna_estado() in maquina.finalStates:  #<- utilizar validação dentro da mauina mesmo
+                #há validações dentro da função transition que devem ser melhoradas ou abstraidas para melhor entendimento do codigo
+                    print "\nResultado: Palavra Aceita"#<- utilizar validação dentro da mauina mesmo
+                    print(len(self.fitas))#<- utilizar validação dentro da mauina mesmo
+                    print(fit.retorna_estado())#<- utilizar validação dentro da mauina mesmo
+                    x = False#<- utilizar validação dentro da mauina mesmo (retornar aqui o valor booleano com a chamada de uma função )
+                    exit(0)
 
-            #for fit in self.fitas:
-             #   print "Estado Atual Fita: "+str(self.fitas.index(fit))+": "+fit.retorna_fita()
-              #  print "Possíveis Estados: "+str(maquina.retorna_transicoesPossiveis(maquina.initialState))
-
-            if maquina.getCurrentState() in maquina.finalStates:
-                print "\nResultado: Palavra Aceita"
-                x = False
-                return 0
-            if ntxState == None:
-                print "\nResultado: Palavra Rejeitada"
-                return 1
+                if(fit not in aux):#<- função pra executar a máquina
+                    aux.append(fit)
+                    iniState = fit.retorna_estado()
+                    self.transition(iniState,fit, maquina)
 
 turing = Turing()
 turing.__main__()
