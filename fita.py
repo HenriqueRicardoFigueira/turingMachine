@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 class Fita:
-    def __init__(self, palavra, alfaEntrada, alfaFita, branco):
+    def __init__(self, palavra, alfaEntrada, alfaFita, branco, estadoInicial):
         self.alfabeto = ''.join(alfaFita) #atribui o alfabeto de entrada
         self.alfabeto = self.alfabeto + branco
         self.branco = branco #atribui o simbolo branco
@@ -10,7 +10,7 @@ class Fita:
         
         self.incializa_fita(''.join(palavra))#atribui a palavra de entrada
         self.posicao_cabeca = 1
-        self.estado = None
+        self.estado = estadoInicial
 
     def incializa_fita(self, palavras): #inicializa o conteúdo da fita
         self._fita = self.branco
