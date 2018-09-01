@@ -22,7 +22,6 @@ class Maquina:
 		self.alfaFita = self.linhasArq[1].split(" ")
 		self.branco = self.linhasArq[2]
 		self.estados = self.linhasArq[3].split(" ")
-		self.estadoInicial = self.linhasArq[4].strip()
 		self.estadoFinal = self.linhasArq[5].split(" ")
 		self.tamanhoFita = int(self.linhasArq[6])
 		self.transicoes = {}
@@ -30,10 +29,10 @@ class Maquina:
 
 		#inicializa maquina
 		self.carrega_maquinaArquivo()
-		self.cria_fitaInicial()
+		self.cria_fitaInicial(self.linhasArq[4].strip())
 
-	def cria_fitaInicial(self):
-		self.adiciona_fita(Fita(self.contentTape, self.alfaEntrada, self.alfaFita, self.branco,self.estadoInicial))
+	def cria_fitaInicial(self, estadoInicial):
+		self.adiciona_fita(Fita(self.contentTape, self.alfaEntrada, self.alfaFita, self.branco, estadoInicial))
 
 	def carrega_maquinaArquivo(self):
 		#COMEÇA QUEBRA DE ARQUIVO (modificar essa parte pra começar a indexar por hash e não por posição ""COMFIRMAR"")
@@ -76,15 +75,7 @@ class Maquina:
 	def verifica_estadoFinal(self, fita):
 		if fita.retorna_estado() in self.estadoFinal:
 			print "\nResultado: Palavra Aceita."
-			print(len(self.fitas))
-			print(fita.retorna_estado())
 			return True
-		else:
-			return False
-
-	def verifica_estadoInicial(self, fita):
-		if str(fita.retorna_estado()) == self.estadoInicial:
-			return  True
 		else:
 			return False
 
@@ -94,15 +85,18 @@ class Maquina:
 		return self.transicoes[iniState]
 
 	def print_fitas(self):
-		print("Quantidade de Fitas:" + str(len(self.fitas)))
+		print("\nQuantidade de Fitas: " + str(len(self.fitas))+"\n")
 		for fita in self.fitas:
-			print("  Fita               :"+str(self.fitas.index(fita)))
-			sys.stdout.write("  Posição da Cabeça  : ")
-			for i in range(0,fita.posicao_cabeca): sys.stdout.write(' ')
+			print("    Fita: "+str(self.fitas.index(fita)))
+			sys.stdout.write("    Posição da Cabeça  : ")
+			sys.stdout.write(' '*fita.posicao_cabeca)
 			print('|')
-			print("  Conteudo Atual Fita: "+fita.retorna_fita())
-			print("  Estado Atual       : "+str(fita.retorna_estado()))
-			print("  Estados Possíves   : "+str(self.retorna_transicoesPossiveis(fita.retorna_estado())))
+			print("    Conteudo Atual Fita: "+fita.retorna_fita())
+			print("    Estado Atual       : "+str(fita.retorna_estado()))
+			print("    Estados Possíves   : "+str(self.retorna_transicoesPossiveis(fita.retorna_estado())))
+			sys.stdout.write("    ")
+			print("_"* 146)
+		print("_"* 150)
 	
 	def adiciona_fita(self,fita):
 		self.fitas.append(fita)
@@ -110,8 +104,11 @@ class Maquina:
 	def remove_fita(self,fita):
 		self.fitas.remove(fita)
 	
-	def clonar_fita(self,fita):
+	def clonar_unicaFita(self,fita):
 		return copy.deepcopy(fita)
+	
+	def clonar_todasFitas(self):
+		return copy.deepcopy(self.fitas)
 
 	def transicao(self, fita): #colocar essa função dentro da maquina também
 		stateTransitions = self.transicoes[fita.retorna_estado()]
@@ -120,14 +117,11 @@ class Maquina:
 			transi = stateTransitions[currentHead]
 			if len(transi) == 0:
 				if(len(self.fitas)>1):
-					print("Não há Estados Possíveis Para fita "+str(self.fitas.index(fita))+'.')
-					self.print_fitas()
-					print("\n")
-
-					return None
+					print("\nNão há Estados Possíveis Para fita "+str(self.fitas.index(fita))+'.')
+					return 1
 
 				else:
-					print("Palavra Rejeitada")
+					print("\nPalavra Rejeitada")
 					exit(1)
 
 			elif len(transi) == 1:
@@ -138,34 +132,26 @@ class Maquina:
 				return None 
 
 			elif len(transi) > 1:
-				newFitas = []
-
+				novasFitas = []
 				for i in transi:
-					fita2 = self.clonar_fita(fita)
+					fita2 = self.clonar_unicaFita(fita)
 					fita2.escrever_fita(i[1])
 					fita2.move_cabeca(i[2])
 					fita2.mudar_estado(i[0])
-					newFitas.append(fita2)
+					novasFitas.append(fita2)
 					#cria a copia de uam fita, movimenta para as possiveis transações e anexa a fita a uma nova lista removendo a si mesma da lista anterior
 					# a lista anterior recebe as novas fitas menos a original
 
-				self.remove_fita(fita)   
-
-				for fita in newFitas:
-					self.adiciona_fita(fita)
-
-				return None
+				self.remove_fita(fita)
+				return novasFitas
 
 			else:
 				return None
 		else:
 			if(len(self.fitas)>1):
-				print("Não há Estados Possíveis Para fita "+str(self.fitas.index(fita))+'.')
-				self.print_fitas()
-				print("\n")
-				self.remove_fita(fita)
-				return None
+				print("\nNão há Estados Possíveis Para fita "+str(self.fitas.index(fita))+'.')
+				return 1
 
 			else:
-				print("Palavra Rejeitada")
+				print("\nPalavra Rejeitada.")
 				exit(1)

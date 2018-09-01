@@ -10,6 +10,7 @@ class Fita:
         
         self.incializa_fita(''.join(palavra))#atribui a palavra de entrada
         self.posicao_cabeca = 1
+        self.estadoInicial = estadoInicial
         self.estado = estadoInicial
 
     def incializa_fita(self, palavras): #inicializa o conteúdo da fita
@@ -75,3 +76,9 @@ class Fita:
 
     def retorna_tamanho(self):
         return len(self._fita)
+
+    def verifica_estadoInicial(self, fita):
+		if str(self.retorna_estado()) == self.estadoInicial:
+			return  True
+		else:
+			return False
