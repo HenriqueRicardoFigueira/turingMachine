@@ -19,14 +19,15 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
     cd turingMachine-master/
 
 ### Documentação
-  #TURING
+  -TURING
 
-    #funcionamento:
+    -funcionamento:
         *cria máquina e fita inicial, corre as fitas e verificar se algum estado das fitas é o final, movimenta a maquina. Caso haja novas fitas remove a fita de origem.
     
   
-  #MAQUINA
-    #Atributos:
+  -MAQUINA
+    
+    -Atributos:
         contentTape
         alfaEntrada
         alfaFIta
@@ -37,10 +38,10 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
         transicoes
         fitas
     
-    #Funcionamento:
+    -Funcionamento:
         Carrega o conteudo da fita, quebra o arquivo em linhas e os carrega nos atributos.
     
-    #Métodos:
+    -Métodos:
         - def cria_fitaInicial():
             *cria fita inical da máquina.
 
@@ -75,12 +76,12 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
             *copia a lista de fitas.
         
         - def transicao():
-            *retorna as trasições possiveis de um estado, verifica a posição da cabeça da fita e caso não haja transição rejeita a palavra, se houver transição possivel vai para ela, escreve na fita, move a cabeça e muda o estado.
+            *retorna as trasições possiveis de um estado, verifica a posição da cabeça da fita e caso não haja transição rejeita    a palavra, se houver transição possivel vai para ela, escreve na fita, move a cabeça e muda o estado.
 
             #Não determinismo
                 *cria a copia de uam fita, movimenta para as possiveis transações e anexa a fita a uma nova lista removendo a si mesma da lista anterior a recebe as novas fitas menos a original.
-  #FITA
-    #Atributos:
+  -FITA
+    -Atributos:
         alfabeto
         branco
         alfabetofita
@@ -89,7 +90,7 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
         estadoInicial 
         estado
 
-    #Métodos:
+    -Métodos:
         - def inicializa_fita():
              *inicializa o conteúdo da fita.
 
