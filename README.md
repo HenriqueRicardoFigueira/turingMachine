@@ -81,6 +81,7 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
             #Não determinismo
                 *cria a copia de uam fita, movimenta para as possiveis transações e anexa a fita a uma nova lista removendo a si mesma da lista anterior a recebe as novas fitas menos a original.
   -FITA
+    
     -Atributos:
         alfabeto
         branco
