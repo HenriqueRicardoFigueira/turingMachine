@@ -1,47 +1,45 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys, os, copy
-from fita import Fita
+import sys, random
 from maquina import Maquina
 
-def main():
-    #aqui só para debbug
-    os.system('cls' if os.name == 'nt' else 'clear')
-    modo = raw_input("Selecione o modo que deseja executar a Máquina e Aperte Enter.\nA - Automático\nM - Manual (Passo a Passo)\n")
+class Turing:
 
-    #inicializa a Maquina e a Fita
-    maquina = Maquina(sys.argv)
-    maquina.changeCurrentState(maquina.initialState)
-    fita = Fita( maquina.contentTape, maquina.inputAlpha, maquina.tapeAlpha, maquina.branco)
-
-    #aqui só para debbug
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print "Estado Atual Fita: "+fita.retorna_fita()
-    print "Possíveis Estados: "+str(maquina.retorna_estadosPossiveis(maquina.initialState))
-    if modo.capitalize() == "M".capitalize(): tst = raw_input("Aperte Enter Para Prosseguir.")
-
-    #pega os estados possiveis
-    ntxState =  maquina.transition(maquina.initialState,fita)
-    
-    x = True
-    while(x == True):
+    #tudo no fim acho que vira maquina
+    def __main__(self):
         #aqui só para debbug
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print "Estado Atual Fita: "+fita.retorna_fita()
-        print "Possíveis Estados: "+str(maquina.retorna_estadosPossiveis(ntxState[0]))
-        if modo.capitalize() == "M".capitalize(): tst = raw_input("Aperte Enter Para Prosseguir.")
+        modo = raw_input("Selecione o modo que deseja executar a Máquina e Aperte Enter.\nA - Automático\nM - Manual (Passo a Passo)\n")
 
-        #pega os estados possiveis
-        ntxState = maquina.transition(ntxState[0],fita)
+        #cria a Maquina e a Fita Inicial
+        maquina = Maquina(sys.argv)
+        while(True):
+            #aqui de debbug tb
+            maquina.print_fitas()
+            if modo.capitalize() == "M".capitalize(): tst = raw_input("\nAperte Enter Para Prosseguir.")
 
-        #verifica o ofim da máquina ou não
-        if maquina.getCurrentState() in maquina.finalStates:
-            print "\nResultado: Palavra Aceita"
-            x = False
-            return 0
-        if ntxState == None:
-            print "\nResultado: Palavra Rejeitada"
-            return 1
+            novasFitas = []
+            #correr as fitas ver se o estado das fitas algum deles é o final
+            for fita in maquina.fitas:
+                #verifica o ofim da máquina ou não
+                if maquina.verifica_estadoFinal(fita):
+                    exit(0)
+                
+                #movimenta a maquina
+                ret = maquina.transicao(fita)
 
-main()
+                #caso haja novas fitas remover a fita de origem
+                if type(ret) is list:
+                    novasFitas+=ret
+                
+                if type(ret) is int:
+                    maquina.print_fitas()
+                    maquina.remove_fita(fita)
+                    if modo.capitalize() == "M".capitalize(): tst = raw_input("\nAperte Enter Para Prosseguir.")
+
+            #se houverem novas fitas..
+            if(novasFitas != None):
+                for newFita in novasFitas:
+                    maquina.adiciona_fita(newFita)
+
+Turing().__main__()

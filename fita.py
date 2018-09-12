@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 
 class Fita:
-    def __init__(self, palavra, alfaEntrada, alfaFita, branco):
-        self.alfabeto = ''.join(alfaEntrada) #atribui o alfabeto de entrada
+    def __init__(self, palavra, alfaEntrada, alfaFita, branco, estadoInicial):
+        self.alfabeto = ''.join(alfaFita) #atribui o alfabeto de entrada
         self.alfabeto = self.alfabeto + branco
         self.branco = branco #atribui o simbolo branco
         self.alfabetoFita = alfaFita #atribui o alfabeto completo da fita (X, B, 0, 1, etc)
         
         self.incializa_fita(''.join(palavra))#atribui a palavra de entrada
         self.posicao_cabeca = 1
+        self.estadoInicial = estadoInicial
+        self.estado = estadoInicial
 
     def incializa_fita(self, palavras): #inicializa o conteúdo da fita
         self._fita = self.branco
@@ -18,10 +20,16 @@ class Fita:
         self._fita += self.branco
         self._fita = list(self._fita)
 
+    def retorna_estado(self):
+        return str(self.estado)
+        
+    def mudar_estado(self, novoEstado):
+        self.estado = novoEstado
+
     def escrever_fita(self, char):#escreve na fita
         ultima_pos_fita = len(self._fita) - 1
 
-        if char not in self.alfabeto:
+        if char not in self.alfabetoFita:
             return
 
         if self.posicao_cabeca < 1: #estende a esquerda
@@ -68,3 +76,9 @@ class Fita:
 
     def retorna_tamanho(self):
         return len(self._fita)
+
+    def verifica_estadoInicial(self, fita):
+		if str(self.retorna_estado()) == self.estadoInicial:
+			return  True
+		else:
+			return False
